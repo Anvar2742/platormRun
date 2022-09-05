@@ -53,18 +53,18 @@ export class FlyingEnemy extends Enemy {
 }
 
 // https://youtu.be/GFO_txvwK_c?t=30237
-export class GroundEnemy extends Enemy {
+export class GroundEnemy extends Enemy { 
     constructor(game) {
         super()
         this.game = game
         this.width = 60
-        this.height = 44
+        this.height = 100
         this.x = this.game.width
-        this.y = this.game.height - this.game.groundMargin - this.width
+        this.y = this.game.height - this.game.groundMargin - this.height + 15
         this.speedX = Math.random() + 1
         this.speedY = 2
-        this.maxFrame = 5
-        this.image = document.getElementById('enemy1')
+        this.maxFrame = 1
+        this.image = document.getElementById('enemy2')
     }
 
     update(deltaTime) {
