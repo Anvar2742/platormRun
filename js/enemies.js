@@ -58,9 +58,9 @@ export class GroundEnemy extends Enemy {
         super()
         this.game = game
         this.width = 60
-        this.height = 100
+        this.height = 90
         this.x = this.game.width
-        this.y = this.game.height - this.game.groundMargin - this.height + 15
+        this.y = this.game.height - this.game.groundMargin - this.height
         this.speedX = Math.random() + 1
         this.speedY = 2
         this.maxFrame = 1

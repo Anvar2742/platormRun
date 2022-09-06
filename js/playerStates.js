@@ -7,7 +7,8 @@ const states = {
     FALLING: 3,
     ROLLING: 4,
     DIVING: 5,
-    HIT: 6
+    HIT: 6,
+    KO: 7
 }
 
 class State {
@@ -134,6 +135,22 @@ export class Hit extends State {
             this.game.player.setState(states.RUNNING, 1)
         } else if (this.game.player.frameX >= 4 && !this.game.player.onGround()) {
             this.game.player.setState(states.FALLING, 1)
+        }
+    }
+}
+
+export class Ko extends State {
+    constructor(game) {
+        super('KO', game)
+    }
+    enter() {
+        this.game.player.frameX = 0
+        this.game.player.frameY = 8
+        this.game.player.maxFrame = 11
+    }
+    handleInput(input) {
+        if (this.game.player.frameX >= 10 && this.game.player.onGround()) {
+            this.game.player.frameX = 11
         }
     }
 }

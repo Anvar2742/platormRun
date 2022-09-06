@@ -2,7 +2,7 @@ import {Player} from './player.js'
 import {InputHandler} from './input.js'
 import {Background} from './background.js'
 import {FlyingEnemy, GroundEnemy} from './enemies.js'
-import {UI} from './UI.js'
+import {UI, Health} from './UI.js'
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas'),
@@ -24,6 +24,9 @@ window.addEventListener('load', () => {
             this.enemies = []
             this.particles = []
             this.collisions = []
+            this.lives = [new Health(this), new Health(this), new Health(this)]
+            this.lifeX = 20
+            this.lifeGap = 20
             this.maxParticle = 50
             this.enemyTimer = 0
             this.enemyInterval = 1000
@@ -60,6 +63,12 @@ window.addEventListener('load', () => {
             this.collisions.forEach((collision, index) => {
                 collision.update(deltaTime)
                 if (collision.markedForDeletion) this.collisions.splice(index, 1)
+            })
+
+            this.lives.forEach((life, index) => {
+                life.draw(ctx, this.lifeX)
+                if (index > 0) this.lifeX = ((index + 1) * this.lifeGap) + (index) * 5
+                else if(index === 0) this.lifeX = 20
             })
         }
 
