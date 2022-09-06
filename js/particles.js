@@ -41,13 +41,13 @@ export class Fire extends Particle {
         this.speedX = 1
         this.speedY = 1
         this.angle = 0
-        this.va = Math.random() * .2 - .1
+        this.va = Math.random() * .8 - .4
     }
 
     update() {
         super.update()
         this.angle += this.va
-        this.y += Math.sin(this.angle * .5)
+        this.y += Math.sin(this.angle * .2)
     }
 
     draw(ctx) {
