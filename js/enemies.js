@@ -69,7 +69,7 @@ export class GroundEnemy extends Enemy {
 
     update(deltaTime) {
         super.update(deltaTime)
-        this.x -= this.game.speed * .8
+        this.x -= this.game.speed
     }
 }
 

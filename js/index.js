@@ -80,10 +80,10 @@ window.addEventListener('load', () => {
 
             // Energy
             if (this.player.currentState === this.player.states[4] && this.energySize > 0) {
-                this.energySize -= .09
+                this.energySize -= 1
             } else {
                 if (this.energySize >= 100) this.energySize = 100
-                else if(this.player.currentState === this.player.states[1]) this.energySize += 1
+                else if(this.player.currentState === this.player.states[1]) this.energySize += .5
 
                 if (this.energySize <= 10 && this.player.onGround()) {
                     this.input.keys = this.input.keys.filter(key => {
