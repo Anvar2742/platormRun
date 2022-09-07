@@ -14,7 +14,11 @@ export class InputHandler {
             ) {
                 this.keys.push(e.key)
             } else if (e.key === "d") this.game.debug = !this.game.debug
-            else if (e.code === 'Space' && this.keys.indexOf(e.code) === -1) {
+            else if (
+                e.code === 'Space' && 
+                this.keys.indexOf(e.code) === -1 &&
+                this.game.energySize > 10
+            ) {
                 this.keys.push(e.code)
             }
         })

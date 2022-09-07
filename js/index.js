@@ -2,7 +2,7 @@ import {Player} from './player.js'
 import {InputHandler} from './input.js'
 import {Background} from './background.js'
 import {FlyingEnemy, GroundEnemy} from './enemies.js'
-import {UI, Health} from './UI.js'
+import {UI, Health, Energy} from './UI.js'
 
 window.addEventListener('load', () => {
     const canvas = document.getElementById('canvas'),
@@ -27,6 +27,8 @@ window.addEventListener('load', () => {
             this.lives = [new Health(this), new Health(this), new Health(this)]
             this.lifeX = 20
             this.lifeGap = 20
+            this.energySize = 100
+            this.energy = new Energy(this)
             this.maxParticle = 50
             this.enemyTimer = 0
             this.enemyInterval = 1000
@@ -49,12 +51,11 @@ window.addEventListener('load', () => {
             }
             this.enemies.forEach(enemy => {
                 enemy.update(deltaTime)
-                if (enemy.markedForDeletion) this.enemies.splice(this.enemies.indexOf(enemy), 1)
             })
 
             this.particles.forEach((particle, index) => {
                 particle.update()
-                if (particle.markedForDeletion) this.particles.splice(index, 1)
+                
             })
             if (this.particles.length > this.maxParticle) {
                 this.particles = this.particles.slice(0, this.maxParticle)
@@ -62,14 +63,36 @@ window.addEventListener('load', () => {
 
             this.collisions.forEach((collision, index) => {
                 collision.update(deltaTime)
-                if (collision.markedForDeletion) this.collisions.splice(index, 1)
+                
             })
+
+            this.enemies = this.enemies.filter(enemy => !enemy.markedForDeletion)
+            this.particles = this.particles.filter(particle => !particle.markedForDeletion)
+            this.collisions = this.collisions.filter(collision => !collision.markedForDeletion)
 
             this.lives.forEach((life, index) => {
                 life.draw(ctx, this.lifeX)
                 if (index > 0) this.lifeX = ((index + 1) * this.lifeGap) + (index) * 5
                 else if(index === 0) this.lifeX = 20
             })
+
+            
+
+            // Energy
+            if (this.player.currentState === this.player.states[4] && this.energySize > 0) {
+                this.energySize -= .09
+            } else {
+                if (this.energySize >= 100) this.energySize = 100
+                else if(this.player.currentState === this.player.states[1]) this.energySize += 1
+
+                if (this.energySize <= 10 && this.player.onGround()) {
+                    this.input.keys = this.input.keys.filter(key => {
+                        key != 'Space'
+                    })
+                }
+            }
+            
+            this.energy.draw(ctx, this.energySize)
         }
 
         draw(ctx) {

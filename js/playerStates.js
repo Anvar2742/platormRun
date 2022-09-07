@@ -92,6 +92,8 @@ export class Falling extends State {
     handleInput(input) {
         if (this.game.player.onGround()) {
             this.game.player.setState(states.RUNNING, 1)
+        } else if(input.includes('Space')) {
+            this.game.player.setState(states.ROLLING, 2)
         }
     }
 }
@@ -148,9 +150,5 @@ export class Ko extends State {
         this.game.player.frameY = 8
         this.game.player.maxFrame = 11
     }
-    handleInput(input) {
-        if (this.game.player.frameX >= 10 && this.game.player.onGround()) {
-            this.game.player.frameX = 11
-        }
-    }
+    handleInput(input) {}
 }
